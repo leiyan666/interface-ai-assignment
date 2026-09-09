@@ -29,24 +29,24 @@
       "id": "step_1",
       "action": "type",
       "target": {
-        "role": "textbox",
+        "role": null,
         "name": "Member Number",
         "text": null,
         "near_text": null,
-        "frame_hint": "Member Lookup",
+        "frame_hint": null,
         "fallbacks": []
       },
       "value": "{{member_id}}",
-      "output_name": null,
+      "output_name": "Member Savings Balance",
       "checkpoint": {
         "type": "value_equals",
         "value": "{{member_id}}",
         "target": {
-          "role": "textbox",
+          "role": null,
           "name": "Member Number",
           "text": null,
           "near_text": null,
-          "frame_hint": "Member Lookup",
+          "frame_hint": null,
           "fallbacks": []
         },
         "output_name": null,
@@ -64,11 +64,11 @@
         "name": "Search",
         "text": null,
         "near_text": null,
-        "frame_hint": "Member Lookup",
+        "frame_hint": null,
         "fallbacks": []
       },
       "value": null,
-      "output_name": null,
+      "output_name": "Member Savings Balance",
       "checkpoint": {
         "type": "any_of",
         "value": null,
@@ -113,20 +113,20 @@
       "id": "step_3",
       "action": "extract",
       "target": {
-        "role": null,
-        "name": null,
+        "role": "textbox",
+        "name": "Savings Account",
         "text": null,
-        "near_text": "Savings Account",
-        "frame_hint": "Member Lookup",
+        "near_text": null,
+        "frame_hint": null,
         "fallbacks": []
       },
       "value": null,
-      "output_name": "savings_balance",
+      "output_name": "Member Savings Balance",
       "checkpoint": {
         "type": "output_extracted",
         "value": null,
         "target": null,
-        "output_name": "savings_balance",
+        "output_name": "Member Savings Balance",
         "conditions": []
       },
       "timeout_ms": 5000,
@@ -197,7 +197,7 @@
   },
   "metadata": {
     "author": "interface.ai take-home",
-    "created_at": "2026-09-08T23:30:59.887669+00:00",
+    "created_at": "2026-09-08T23:50:50.019419+00:00",
     "source": "discovery",
     "tags": [
       "browser",

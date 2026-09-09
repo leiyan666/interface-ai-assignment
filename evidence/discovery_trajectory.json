@@ -1,0 +1,68 @@
+[
+  {
+    "step": 1,
+    "action": {
+      "action_type": "type",
+      "target": {
+        "role": null,
+        "name": "Member Number",
+        "text": null,
+        "near_text": null,
+        "frame_hint": null,
+        "fallbacks": []
+      },
+      "value": "10001",
+      "output_name": "Member Savings Balance",
+      "reason": "To initiate the search for member 10001's savings balance."
+    },
+    "result": {
+      "ok": true,
+      "message": "",
+      "value": null
+    }
+  },
+  {
+    "step": 2,
+    "action": {
+      "action_type": "click",
+      "target": {
+        "role": "button",
+        "name": "Search",
+        "text": null,
+        "near_text": null,
+        "frame_hint": null,
+        "fallbacks": []
+      },
+      "value": null,
+      "output_name": "Member Savings Balance",
+      "reason": "To execute the search for member 10001's savings balance after entering the member number."
+    },
+    "result": {
+      "ok": true,
+      "message": "",
+      "value": null
+    }
+  },
+  {
+    "step": 3,
+    "action": {
+      "action_type": "extract",
+      "target": {
+        "role": "textbox",
+        "name": "Savings Account",
+        "text": null,
+        "near_text": null,
+        "frame_hint": null,
+        "fallbacks": []
+      },
+      "value": null,
+      "output_name": "Member Savings Balance",
+      "reason": "To retrieve the savings balance for member 10001 after executing the search."
+    },
+    "result": {
+      "ok": true,
+      "message": "",
+      "value": "$4250.32"
+    }
+  }
+]
