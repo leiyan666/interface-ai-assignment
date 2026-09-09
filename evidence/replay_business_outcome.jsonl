@@ -16,3 +16,6 @@
 {"timestamp": "2026-09-08T23:32:47.345110+00:00", "run_id": "459897ade2", "phase": "replay", "event": "action_executed", "step": "step_1", "action": "type", "status": "ok"}
 {"timestamp": "2026-09-08T23:32:48.359955+00:00", "run_id": "459897ade2", "phase": "replay", "event": "action_executed", "step": "step_2", "action": "click", "status": "ok"}
 {"timestamp": "2026-09-08T23:32:48.439594+00:00", "run_id": "459897ade2", "phase": "replay", "event": "replay_completed", "status": "business_outcome", "business_outcome": "MEMBER_NOT_FOUND"}
+{"timestamp": "2026-09-09T05:05:12.406107+00:00", "run_id": "bb4cf713c6", "phase": "replay", "event": "action_executed", "step": "step_1", "action": "type", "status": "ok"}
+{"timestamp": "2026-09-09T05:05:13.466395+00:00", "run_id": "bb4cf713c6", "phase": "replay", "event": "action_executed", "step": "step_2", "action": "click", "status": "ok"}
+{"timestamp": "2026-09-09T05:05:13.628156+00:00", "run_id": "bb4cf713c6", "phase": "replay", "event": "replay_completed", "status": "business_outcome", "business_outcome": "NO_SAVINGS_ACCOUNT"}

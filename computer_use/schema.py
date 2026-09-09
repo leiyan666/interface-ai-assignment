@@ -78,6 +78,7 @@ class Action(BaseModel):
     value: str | None = None
     output_name: str | None = None
     reason: str
+    risk: RiskLevel = RiskLevel.READ
 
 
 class ActionResult(BaseModel):
@@ -160,6 +161,7 @@ class SafetyPolicy(BaseModel):
     )
     blocked_routes: list[str] = Field(default_factory=list)
     require_human_for_risk: list[RiskLevel] = Field(default_factory=lambda: [RiskLevel.IRREVERSIBLE])
+    target_risks: dict[str, RiskLevel] = Field(default_factory=dict)
 
 
 class CapabilityMetadata(BaseModel):

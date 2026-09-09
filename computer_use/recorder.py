@@ -3,10 +3,11 @@
 from __future__ import annotations
 
 from datetime import datetime, timezone
+from .safety import action_risk
 
 from .schema import (
     BusinessOutcomeSpec, Capability, CapabilityMetadata, CapabilityStep, Checkpoint,
-    InputSpec, OutputSpec, SafetyPolicy, Target, TargetApp,
+    InputSpec, OutputSpec, SafetyPolicy, Target, TargetApp, Action,
 )
 
 
@@ -55,7 +56,8 @@ def _trajectory_steps(trajectory: list[dict]) -> tuple[list[CapabilityStep], str
         steps.append(CapabilityStep(
             id=f"step_{len(steps) + 1}", action=action_type, target=target,
             value=value, output_name=output_name, checkpoint=checkpoint,
-            risk="safe_write" if action_type == "type" else "read",
+            risk=action_risk(Action(action_type=action_type, target=target,
+                risk=action_data.get("risk", "read"), reason="compile executed action")),
         ))
     return steps, concrete_member_id
 

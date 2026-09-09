@@ -4,10 +4,13 @@ from __future__ import annotations
 
 from pathlib import Path
 from typing import Protocol
+from collections.abc import Callable
+from urllib.parse import urlsplit, urlunsplit
 
 from playwright.sync_api import Browser, BrowserContext, Locator, Page, sync_playwright
 
 from .schema import Action, ActionResult, Observation, ObservationElement, Target
+from .human_tracking import TRACKING_SCRIPT
 
 
 class SurfaceAdapter(Protocol):
@@ -26,10 +29,43 @@ class PlaywrightSurface:
             headless=headless, args=["--no-sandbox", "--disable-setuid-sandbox"]
         )
         self.context: BrowserContext = self.browser.new_context()
+        self._human_sink: Callable[[dict], None] | None = None
+        self.context.expose_binding("__recordHumanEvent", self._human_event)
+        self.context.add_init_script(TRACKING_SCRIPT)
+        self.context.on("page", self._track_page)
         self.page: Page = self.context.new_page()
         self.entry_point = entry_point
         self.dialog_message: str | None = None
         self.page.on("dialog", self._on_dialog)
+
+    @staticmethod
+    def _safe_event_url(url: str) -> str:
+        parsed = urlsplit(url)
+        return urlunsplit((parsed.scheme, parsed.hostname or "", parsed.path, "", ""))
+
+    def _human_event(self, source: dict, payload: dict) -> None:
+        if self._human_sink and isinstance(payload, dict) and payload.get("kind") in {"click", "change", "submit"}:
+            self._human_sink({
+                "kind": payload["kind"],
+                "target": {key: str(payload.get(key, ""))[:120] for key in ("tag", "role", "name")},
+                "frame_url": self._safe_event_url(source["frame"].url),
+                "value": "[NOT RECORDED]",
+            })
+
+    def _track_page(self, page: Page) -> None:
+        def navigated(frame):
+            if self._human_sink:
+                self._human_sink({"kind": "navigation", "frame_url": self._safe_event_url(frame.url)})
+        page.on("framenavigated", navigated)
+
+    def start_human_tracking(self, sink: Callable[[dict], None]) -> None:
+        self._human_sink = sink
+
+    def stop_human_tracking(self) -> None:
+        self._human_sink = None
+
+    def pump_events(self) -> None:
+        self.page.wait_for_timeout(100)
 
     def _on_dialog(self, dialog) -> None:
         self.dialog_message = dialog.message

@@ -14,6 +14,7 @@ from .recorder import compile_lookup_capability
 from .safety import SafetyViolation, validate_action
 from .schema import Action, SafetyPolicy
 from .surface import PlaywrightSurface
+from .success import verified_savings_balance
 
 
 def discover(goal: str, target: str, client: LLMClient, headless: bool = False, max_steps: int = 12) -> Path:
@@ -36,20 +37,36 @@ def discover(goal: str, target: str, client: LLMClient, headless: bool = False, 
                 continue
             validate_action(action, SafetyPolicy(), surface.current_url())
             result = surface.execute(action)
+            balance = None
+            if action.action_type == "extract":
+                balance = verified_savings_balance(action, result, surface.observe())
+                if balance is None:
+                    result = result.model_copy(update={
+                        "ok": False,
+                        "message": "Savings checkpoint failed. Extract the Savings Account value "
+                        "as money using output_name='savings_balance'.",
+                    })
+            if action.action_type == "finish":
+                result = result.model_copy(update={
+                    "ok": False,
+                    "message": "Finish rejected: first extract and verify savings_balance.",
+                })
             trajectory.append({"step": step_number, "action": action.model_dump(), "result": result.model_dump()})
-            logger.event("action_executed", step=step_number, action=action.action_type, target=action.target.model_dump() if action.target else None, value=action.value, output_name=action.output_name, reason=action.reason, status="ok")
-            # A successful extraction is sufficient evidence that this demo goal is complete,
-            # even if a provider keeps repeating the extraction instead of saying finish.
-            goal_complete = action.action_type == "finish" or (action.action_type == "extract" and result.value)
+            logger.event("action_executed", step=step_number, action=action.action_type, target=action.target.model_dump() if action.target else None, value=action.value, output_name=action.output_name, reason=action.reason, status="ok" if result.ok else "checkpoint_rejected")
+            if not result.ok:
+                logger.event("success_checkpoint_rejected", step=step_number, message=result.message)
+            # Verified extraction ends this single-output goal immediately; a bare
+            # finish is never proof of success. Zero is a valid balance.
+            goal_complete = balance is not None
             if goal_complete:
                 artifact = compile_lookup_capability(target, trajectory)
                 path = Path("artifacts/lookup_savings_balance.json")
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text(json.dumps(artifact.model_dump(mode="json"), indent=2) + "\n", encoding="utf-8")
                 Path("evidence/discovery_trajectory.json").write_text(json.dumps(trajectory, indent=2) + "\n", encoding="utf-8")
-                logger.event("discovery_completed", step=step_number, artifact=str(path), reason="finish action or successful extraction")
+                logger.event("discovery_completed", step=step_number, artifact=str(path), reason="savings checkpoint satisfied", outputs={"savings_balance": str(balance)})
                 return path
             time.sleep(0.1)
-        raise RuntimeError("Discovery stopped after max_steps without a finish action")
+        raise RuntimeError("Discovery stopped after max_steps without a verified savings balance")
     finally:
         surface.close()

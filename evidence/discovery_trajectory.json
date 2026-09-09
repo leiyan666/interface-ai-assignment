@@ -12,8 +12,8 @@
         "fallbacks": []
       },
       "value": "10001",
-      "output_name": "Member Savings Balance",
-      "reason": "To initiate the search for member 10001's savings balance."
+      "output_name": null,
+      "reason": "To look up the savings balance for member 10001, the member number needs to be entered into the textbox."
     },
     "result": {
       "ok": true,
@@ -34,8 +34,8 @@
         "fallbacks": []
       },
       "value": null,
-      "output_name": "Member Savings Balance",
-      "reason": "To execute the search for member 10001's savings balance after entering the member number."
+      "output_name": "savings_balance",
+      "reason": "After entering the member number, clicking the search button is necessary to retrieve the savings balance for member 10001."
     },
     "result": {
       "ok": true,
@@ -56,8 +56,8 @@
         "fallbacks": []
       },
       "value": null,
-      "output_name": "Member Savings Balance",
-      "reason": "To retrieve the savings balance for member 10001 after executing the search."
+      "output_name": "savings_balance",
+      "reason": "To obtain the savings balance for member 10001 after performing the search."
     },
     "result": {
       "ok": true,

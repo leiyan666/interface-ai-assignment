@@ -13,3 +13,9 @@
 {"timestamp": "2026-09-08T23:52:02.592563+00:00", "run_id": "505172cf5a", "phase": "replay", "event": "action_executed", "step": "step_1", "action": "type", "status": "ok"}
 {"timestamp": "2026-09-08T23:52:03.890693+00:00", "run_id": "505172cf5a", "phase": "replay", "event": "action_executed", "step": "step_2", "action": "click", "status": "ok"}
 {"timestamp": "2026-09-08T23:52:04.719553+00:00", "run_id": "505172cf5a", "phase": "replay", "event": "action_executed", "step": "step_3", "action": "extract", "status": "ok"}
+{"timestamp": "2026-09-09T05:05:02.747977+00:00", "run_id": "66d8480e50", "phase": "replay", "event": "action_executed", "step": "step_1", "action": "type", "status": "ok"}
+{"timestamp": "2026-09-09T05:05:03.778467+00:00", "run_id": "66d8480e50", "phase": "replay", "event": "action_executed", "step": "step_2", "action": "click", "status": "ok"}
+{"timestamp": "2026-09-09T05:05:04.613161+00:00", "run_id": "66d8480e50", "phase": "replay", "event": "action_executed", "step": "step_3", "action": "extract", "status": "ok"}
+{"timestamp": "2026-09-09T05:05:04.897278+00:00", "run_id": "66d8480e50", "phase": "replay", "event": "replay_completed", "status": "success", "outputs": {"savings_balance": 8921.1}}
+{"timestamp": "2026-09-09T05:07:15.456815+00:00", "run_id": "8bf241923d", "phase": "replay", "event": "action_executed", "step": "step_1", "action": "type", "status": "ok"}
+{"timestamp": "2026-09-09T05:07:16.750139+00:00", "run_id": "8bf241923d", "phase": "replay", "event": "step_failed", "step": "step_2", "action": "click", "status": "error", "message": "Checkpoint failed for step_2"}

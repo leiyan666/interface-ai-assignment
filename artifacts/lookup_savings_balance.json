@@ -37,7 +37,7 @@
         "fallbacks": []
       },
       "value": "{{member_id}}",
-      "output_name": "Member Savings Balance",
+      "output_name": null,
       "checkpoint": {
         "type": "value_equals",
         "value": "{{member_id}}",
@@ -68,7 +68,7 @@
         "fallbacks": []
       },
       "value": null,
-      "output_name": "Member Savings Balance",
+      "output_name": "savings_balance",
       "checkpoint": {
         "type": "any_of",
         "value": null,
@@ -121,12 +121,12 @@
         "fallbacks": []
       },
       "value": null,
-      "output_name": "Member Savings Balance",
+      "output_name": "savings_balance",
       "checkpoint": {
         "type": "output_extracted",
         "value": null,
         "target": null,
-        "output_name": "Member Savings Balance",
+        "output_name": "savings_balance",
         "conditions": []
       },
       "timeout_ms": 5000,
@@ -197,7 +197,7 @@
   },
   "metadata": {
     "author": "interface.ai take-home",
-    "created_at": "2026-09-08T23:50:50.019419+00:00",
+    "created_at": "2026-09-09T05:04:49.378208+00:00",
     "source": "discovery",
     "tags": [
       "browser",
