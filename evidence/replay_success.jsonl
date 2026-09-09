@@ -19,3 +19,11 @@
 {"timestamp": "2026-09-09T05:05:04.897278+00:00", "run_id": "66d8480e50", "phase": "replay", "event": "replay_completed", "status": "success", "outputs": {"savings_balance": 8921.1}}
 {"timestamp": "2026-09-09T05:07:15.456815+00:00", "run_id": "8bf241923d", "phase": "replay", "event": "action_executed", "step": "step_1", "action": "type", "status": "ok"}
 {"timestamp": "2026-09-09T05:07:16.750139+00:00", "run_id": "8bf241923d", "phase": "replay", "event": "step_failed", "step": "step_2", "action": "click", "status": "error", "message": "Checkpoint failed for step_2"}
+{"timestamp": "2026-09-09T05:39:52.696633+00:00", "run_id": "6b4843aa2b", "phase": "replay", "event": "action_executed", "step": "step_1", "action": "type", "status": "ok"}
+{"timestamp": "2026-09-09T05:39:53.869994+00:00", "run_id": "6b4843aa2b", "phase": "replay", "event": "action_executed", "step": "step_2", "action": "click", "status": "ok"}
+{"timestamp": "2026-09-09T05:39:54.699942+00:00", "run_id": "6b4843aa2b", "phase": "replay", "event": "action_executed", "step": "step_3", "action": "extract", "status": "ok"}
+{"timestamp": "2026-09-09T05:39:54.939594+00:00", "run_id": "6b4843aa2b", "phase": "replay", "event": "replay_completed", "status": "success", "outputs": {"savings_balance": 8921.1}}
+{"timestamp": "2026-09-09T05:40:14.944312+00:00", "run_id": "51cf5e3602", "phase": "replay", "event": "action_executed", "step": "step_1", "action": "type", "status": "ok"}
+{"timestamp": "2026-09-09T05:40:15.958282+00:00", "run_id": "51cf5e3602", "phase": "replay", "event": "action_executed", "step": "step_2", "action": "click", "status": "ok"}
+{"timestamp": "2026-09-09T05:40:16.806258+00:00", "run_id": "51cf5e3602", "phase": "replay", "event": "action_executed", "step": "step_3", "action": "extract", "status": "ok"}
+{"timestamp": "2026-09-09T05:40:17.068776+00:00", "run_id": "51cf5e3602", "phase": "replay", "event": "replay_completed", "status": "success", "outputs": {"savings_balance": 8921.1}}

@@ -13,9 +13,25 @@ from .llm import LLMClient
 from .logging_utils import JsonlLogger
 from .recorder import compile_lookup_capability
 from .safety import SafetyViolation, validate_action
-from .schema import Action, SafetyPolicy
+from .schema import Action, ActionResult, Observation, SafetyPolicy
 from .surface import PlaywrightSurface
 from .success import verified_savings_balance
+
+
+def lookup_submission_error(action: Action, observation: Observation) -> str | None:
+    """Do not resubmit the mock lookup form after its input has been cleared."""
+    if action.action_type != "click" or not action.target:
+        return None
+    label = action.target.name or action.target.text or ""
+    if label.strip().casefold() != "search":
+        return None
+    inputs = [element for element in observation.elements if element.role == "textbox"
+              and (element.name or "").strip().rstrip(":").casefold() == "member number"]
+    if not inputs or not any(element.value and element.value.strip() for element in inputs):
+        return ("Search rejected: no populated Member Number field was observed. "
+                "If Savings Account is already displayed, extract its value with "
+                "output_name='savings_balance'. Otherwise observe and fill the member field before Search.")
+    return None
 
 
 def discover(goal: str, target: str, client: LLMClient, headless: bool = False, max_steps: int = 12) -> Path:
@@ -38,7 +54,18 @@ def discover(goal: str, target: str, client: LLMClient, headless: bool = False, 
                 handoff(surface, logger, "evidence/failure_or_handoff.png")
                 continue
             validate_action(action, SafetyPolicy(), surface.current_url())
-            result = surface.execute(action)
+            submission_error = lookup_submission_error(action, observation)
+            if submission_error:
+                result = ActionResult(ok=False, message=submission_error)
+                logger.event("action_rejected", step=step_number, message=submission_error)
+            else:
+                try:
+                    result = surface.execute(action)
+                except LookupError as exc:
+                    evidence = surface.screenshot(f"evidence/discovery_failure_{run_id}_{step_number}.png")
+                    result = ActionResult(ok=False, message=f"Target unavailable: {exc}. Re-observe before choosing an available action.")
+                    logger.event("action_failed", step=step_number, message=result.message, evidence=evidence,
+                                 observation=surface.observe().model_dump(mode="json"))
             balance = None
             if action.action_type == "extract":
                 balance = verified_savings_balance(action, result, surface.observe())

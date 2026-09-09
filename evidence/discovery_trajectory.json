@@ -12,8 +12,9 @@
         "fallbacks": []
       },
       "value": "10001",
-      "output_name": null,
-      "reason": "To look up the savings balance for member 10001, the member number needs to be entered into the textbox."
+      "output_name": "Typing member number",
+      "reason": "To look up member 10001's savings balance, I need to input the member number in the textbox.",
+      "risk": "read"
     },
     "result": {
       "ok": true,
@@ -34,8 +35,9 @@
         "fallbacks": []
       },
       "value": null,
-      "output_name": "savings_balance",
-      "reason": "After entering the member number, clicking the search button is necessary to retrieve the savings balance for member 10001."
+      "output_name": "Searching for member 10001",
+      "reason": "After entering the member number, I need to click the search button to retrieve the savings balance for member 10001.",
+      "risk": "read"
     },
     "result": {
       "ok": true,
@@ -56,8 +58,32 @@
         "fallbacks": []
       },
       "value": null,
+      "output_name": "Retrieving savings balance for member 10001",
+      "reason": "To obtain the savings balance for member 10001 after performing the search.",
+      "risk": "read"
+    },
+    "result": {
+      "ok": false,
+      "message": "Savings checkpoint failed. Extract the Savings Account value as money using output_name='savings_balance'.",
+      "value": "$4250.32"
+    }
+  },
+  {
+    "step": 4,
+    "action": {
+      "action_type": "extract",
+      "target": {
+        "role": "textbox",
+        "name": "Savings Account",
+        "text": null,
+        "near_text": null,
+        "frame_hint": null,
+        "fallbacks": []
+      },
+      "value": null,
       "output_name": "savings_balance",
-      "reason": "To obtain the savings balance for member 10001 after performing the search."
+      "reason": "To obtain the savings balance for member 10001 after performing the search.",
+      "risk": "read"
     },
     "result": {
       "ok": true,

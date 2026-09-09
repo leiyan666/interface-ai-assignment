@@ -4,7 +4,7 @@ import json
 import pytest
 
 from computer_use.discovery import discover
-from computer_use.schema import Action, ActionResult, Observation, Target
+from computer_use.schema import Action, ActionResult, Observation, ObservationElement, Target
 from computer_use.success import verified_savings_balance
 
 
@@ -61,28 +61,39 @@ def test_premature_finish_does_not_write_artifact(monkeypatch, tmp_path, value, 
 
 
 @pytest.mark.parametrize("value", ["$4250.32", 0])
-def test_verified_workflow_writes_compiled_artifact(monkeypatch, tmp_path, value):
+@pytest.mark.parametrize("repeat_search", [False, True])
+def test_verified_workflow_writes_compiled_artifact(monkeypatch, tmp_path, value, repeat_search):
     monkeypatch.chdir(tmp_path)
     monkeypatch.setattr("computer_use.discovery.time.sleep", lambda _: None)
-    actions = iter([
+    sequence = [
         Action(action_type="type", target=Target(name="Member Number"), value="10001", reason="fill"),
         Action(action_type="click", target=Target(name="Search"), reason="search"),
-        extraction(),
-    ])
+    ]
+    if repeat_search:
+        sequence.append(Action(action_type="click", target=Target(name="Search"), reason="repeat"))
+    sequence.append(extraction())
+    actions = iter(sequence)
 
     class Surface:
-        def __init__(self, *args, **kwargs): pass
+        def __init__(self, *args, **kwargs): self.member = ""
         def start(self): pass
         def close(self): pass
         def current_url(self): return "http://127.0.0.1:8000/"
-        def observe(self): return Observation(url=self.current_url(), title="", visible_text="Savings Account")
-        def execute(self, action): return ActionResult(ok=True, value=value if action.action_type == "extract" else None)
+        def observe(self):
+            return Observation(url=self.current_url(), title="", visible_text="Savings Account",
+                elements=[ObservationElement(ref="e1", role="textbox", name="Member Number:", value=self.member)])
+        def execute(self, action):
+            if action.action_type == "type": self.member = action.value
+            if action.action_type == "click":
+                assert self.member, "Empty form must never be resubmitted"
+                self.member = ""
+            return ActionResult(ok=True, value=value if action.action_type == "extract" else None)
 
     class Client:
         def decide(self, goal, observation, history): return next(actions)
 
     monkeypatch.setattr("computer_use.discovery.PlaywrightSurface", Surface)
-    artifact = discover("return savings balance", "http://127.0.0.1:8000/", Client(), max_steps=3)
+    artifact = discover("return savings balance", "http://127.0.0.1:8000/", Client(), max_steps=len(sequence))
     data = json.loads(artifact.read_text())
     assert [s["action"] for s in data["steps"]] == ["type", "click", "extract"]
     assert data["steps"][0]["value"] == "{{member_id}}"
