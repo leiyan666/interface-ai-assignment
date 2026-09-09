@@ -1,29 +1,4 @@
-{"timestamp": "2026-09-08T23:14:42.365754+00:00", "run_id": "d032f45096", "phase": "replay", "event": "step_failed", "step": "step_1", "action": "type", "status": "error", "message": "Could not resolve semantic target: {\"role\":\"textbox\",\"name\":\"Member Number\",\"text\":null,\"near_text\":null,\"frame_hint\":\"Member Lookup\",\"fallbacks\":[]}"}
-{"timestamp": "2026-09-08T23:15:09.603353+00:00", "run_id": "c0c7d6c567", "phase": "replay", "event": "action_executed", "step": "step_1", "action": "type", "status": "ok"}
-{"timestamp": "2026-09-08T23:15:10.013670+00:00", "run_id": "c0c7d6c567", "phase": "replay", "event": "action_executed", "step": "step_2", "action": "click", "status": "ok"}
-{"timestamp": "2026-09-08T23:15:10.226172+00:00", "run_id": "c0c7d6c567", "phase": "replay", "event": "step_failed", "step": "step_3", "action": "extract", "status": "error", "message": "Could not resolve semantic target: {\"role\":null,\"name\":null,\"text\":null,\"near_text\":\"Savings Account\",\"frame_hint\":\"Member Lookup\",\"fallbacks\":[]}"}
-{"timestamp": "2026-09-08T23:16:06.284452+00:00", "run_id": "d056eedbe3", "phase": "replay", "event": "action_executed", "step": "step_1", "action": "type", "status": "ok"}
-{"timestamp": "2026-09-08T23:16:06.678189+00:00", "run_id": "d056eedbe3", "phase": "replay", "event": "action_executed", "step": "step_2", "action": "click", "status": "ok"}
-{"timestamp": "2026-09-08T23:16:06.934247+00:00", "run_id": "d056eedbe3", "phase": "replay", "event": "action_executed", "step": "step_3", "action": "extract", "status": "ok"}
-{"timestamp": "2026-09-08T23:16:07.194241+00:00", "run_id": "d056eedbe3", "phase": "replay", "event": "replay_completed", "status": "success", "outputs": {"savings_balance": 8921.1}}
-{"timestamp": "2026-09-08T23:32:31.120862+00:00", "run_id": "18b17871e1", "phase": "replay", "event": "action_executed", "step": "step_1", "action": "type", "status": "ok"}
-{"timestamp": "2026-09-08T23:32:31.722408+00:00", "run_id": "18b17871e1", "phase": "replay", "event": "action_executed", "step": "step_2", "action": "click", "status": "ok"}
-{"timestamp": "2026-09-08T23:32:32.061225+00:00", "run_id": "18b17871e1", "phase": "replay", "event": "action_executed", "step": "step_3", "action": "extract", "status": "ok"}
-{"timestamp": "2026-09-08T23:32:32.354027+00:00", "run_id": "18b17871e1", "phase": "replay", "event": "replay_completed", "status": "success", "outputs": {"savings_balance": 8921.1}}
-{"timestamp": "2026-09-08T23:52:02.592563+00:00", "run_id": "505172cf5a", "phase": "replay", "event": "action_executed", "step": "step_1", "action": "type", "status": "ok"}
-{"timestamp": "2026-09-08T23:52:03.890693+00:00", "run_id": "505172cf5a", "phase": "replay", "event": "action_executed", "step": "step_2", "action": "click", "status": "ok"}
-{"timestamp": "2026-09-08T23:52:04.719553+00:00", "run_id": "505172cf5a", "phase": "replay", "event": "action_executed", "step": "step_3", "action": "extract", "status": "ok"}
-{"timestamp": "2026-09-09T05:05:02.747977+00:00", "run_id": "66d8480e50", "phase": "replay", "event": "action_executed", "step": "step_1", "action": "type", "status": "ok"}
-{"timestamp": "2026-09-09T05:05:03.778467+00:00", "run_id": "66d8480e50", "phase": "replay", "event": "action_executed", "step": "step_2", "action": "click", "status": "ok"}
-{"timestamp": "2026-09-09T05:05:04.613161+00:00", "run_id": "66d8480e50", "phase": "replay", "event": "action_executed", "step": "step_3", "action": "extract", "status": "ok"}
-{"timestamp": "2026-09-09T05:05:04.897278+00:00", "run_id": "66d8480e50", "phase": "replay", "event": "replay_completed", "status": "success", "outputs": {"savings_balance": 8921.1}}
-{"timestamp": "2026-09-09T05:07:15.456815+00:00", "run_id": "8bf241923d", "phase": "replay", "event": "action_executed", "step": "step_1", "action": "type", "status": "ok"}
-{"timestamp": "2026-09-09T05:07:16.750139+00:00", "run_id": "8bf241923d", "phase": "replay", "event": "step_failed", "step": "step_2", "action": "click", "status": "error", "message": "Checkpoint failed for step_2"}
-{"timestamp": "2026-09-09T05:39:52.696633+00:00", "run_id": "6b4843aa2b", "phase": "replay", "event": "action_executed", "step": "step_1", "action": "type", "status": "ok"}
-{"timestamp": "2026-09-09T05:39:53.869994+00:00", "run_id": "6b4843aa2b", "phase": "replay", "event": "action_executed", "step": "step_2", "action": "click", "status": "ok"}
-{"timestamp": "2026-09-09T05:39:54.699942+00:00", "run_id": "6b4843aa2b", "phase": "replay", "event": "action_executed", "step": "step_3", "action": "extract", "status": "ok"}
-{"timestamp": "2026-09-09T05:39:54.939594+00:00", "run_id": "6b4843aa2b", "phase": "replay", "event": "replay_completed", "status": "success", "outputs": {"savings_balance": 8921.1}}
-{"timestamp": "2026-09-09T05:40:14.944312+00:00", "run_id": "51cf5e3602", "phase": "replay", "event": "action_executed", "step": "step_1", "action": "type", "status": "ok"}
-{"timestamp": "2026-09-09T05:40:15.958282+00:00", "run_id": "51cf5e3602", "phase": "replay", "event": "action_executed", "step": "step_2", "action": "click", "status": "ok"}
-{"timestamp": "2026-09-09T05:40:16.806258+00:00", "run_id": "51cf5e3602", "phase": "replay", "event": "action_executed", "step": "step_3", "action": "extract", "status": "ok"}
-{"timestamp": "2026-09-09T05:40:17.068776+00:00", "run_id": "51cf5e3602", "phase": "replay", "event": "replay_completed", "status": "success", "outputs": {"savings_balance": 8921.1}}
+{"timestamp": "2026-09-09T05:45:09.612871+00:00", "run_id": "b9e91a5324", "phase": "replay", "event": "action_executed", "step": "step_1", "action": "type", "status": "ok"}
+{"timestamp": "2026-09-09T05:45:10.611408+00:00", "run_id": "b9e91a5324", "phase": "replay", "event": "action_executed", "step": "step_2", "action": "click", "status": "ok"}
+{"timestamp": "2026-09-09T05:45:11.460846+00:00", "run_id": "b9e91a5324", "phase": "replay", "event": "action_executed", "step": "step_3", "action": "extract", "status": "ok"}
+{"timestamp": "2026-09-09T05:45:11.696841+00:00", "run_id": "b9e91a5324", "phase": "replay", "event": "replay_completed", "status": "success", "outputs": {"savings_balance": 8921.1}}

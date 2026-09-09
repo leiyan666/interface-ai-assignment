@@ -5,38 +5,38 @@
       "action_type": "type",
       "target": {
         "role": null,
-        "name": "Member Number",
+        "name": "textbox Member Number",
         "text": null,
         "near_text": null,
         "frame_hint": null,
         "fallbacks": []
       },
       "value": "10001",
-      "output_name": "Typing member number",
-      "reason": "To look up member 10001's savings balance, I need to input the member number in the textbox.",
+      "output_name": "input_member_number",
+      "reason": "The next step is to input the member number to retrieve their savings balance.",
       "risk": "read"
     },
     "result": {
-      "ok": true,
-      "message": "",
+      "ok": false,
+      "message": "Target unavailable: Could not resolve semantic target: {\"role\":null,\"name\":\"textbox Member Number\",\"text\":null,\"near_text\":null,\"frame_hint\":null,\"fallbacks\":[]}. Re-observe before choosing an available action.",
       "value": null
     }
   },
   {
     "step": 2,
     "action": {
-      "action_type": "click",
+      "action_type": "type",
       "target": {
-        "role": "button",
-        "name": "Search",
+        "role": "textbox",
+        "name": "Member Number:",
         "text": null,
         "near_text": null,
         "frame_hint": null,
         "fallbacks": []
       },
-      "value": null,
-      "output_name": "Searching for member 10001",
-      "reason": "After entering the member number, I need to click the search button to retrieve the savings balance for member 10001.",
+      "value": "10001",
+      "output_name": "input_member_number",
+      "reason": "The next step is to input the member number to retrieve their savings balance.",
       "risk": "read"
     },
     "result": {
@@ -48,24 +48,24 @@
   {
     "step": 3,
     "action": {
-      "action_type": "extract",
+      "action_type": "click",
       "target": {
-        "role": "textbox",
-        "name": "Savings Account",
+        "role": "button",
+        "name": "Search",
         "text": null,
         "near_text": null,
         "frame_hint": null,
         "fallbacks": []
       },
       "value": null,
-      "output_name": "Retrieving savings balance for member 10001",
-      "reason": "To obtain the savings balance for member 10001 after performing the search.",
+      "output_name": "search_member",
+      "reason": "The next step is to execute the search for the member to retrieve their savings balance.",
       "risk": "read"
     },
     "result": {
-      "ok": false,
-      "message": "Savings checkpoint failed. Extract the Savings Account value as money using output_name='savings_balance'.",
-      "value": "$4250.32"
+      "ok": true,
+      "message": "",
+      "value": null
     }
   },
   {
@@ -82,7 +82,7 @@
       },
       "value": null,
       "output_name": "savings_balance",
-      "reason": "To obtain the savings balance for member 10001 after performing the search.",
+      "reason": "The savings balance for member 10001 needs to be retrieved after the search is executed.",
       "risk": "read"
     },
     "result": {
