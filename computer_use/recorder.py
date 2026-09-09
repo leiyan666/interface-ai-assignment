@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 from .safety import action_risk
+from .success import parse_balance
 
 from .schema import (
     BusinessOutcomeSpec, Capability, CapabilityMetadata, CapabilityStep, Checkpoint,
@@ -21,31 +22,35 @@ def _trajectory_steps(trajectory: list[dict]) -> tuple[list[CapabilityStep], str
     """Turn successful executed actions into ordered, replayable steps."""
     steps: list[CapabilityStep] = []
     concrete_member_id: str | None = None
-    seen: set[tuple[str, str]] = set()
+    phase = -1
 
     for item in trajectory:
         action_data = item.get("action", {})
         result = item.get("result", {})
-        if result.get("ok") is False:
+        if result.get("ok") is not True:
             continue
         action_type = action_data.get("action_type", action_data.get("type"))
-        if action_type not in {"click", "type", "extract", "navigate", "wait"}:
+        if action_type not in {"click", "type", "extract"}:
             continue
+        next_phase = {"type": 0, "click": 1, "extract": 2}[action_type]
+        if next_phase < phase or next_phase > phase + 1:
+            raise ValueError("Lookup trajectory must follow type -> click -> extract order")
+        phase = next_phase
         target_data = action_data.get("target")
         target = Target.model_validate(target_data) if target_data else None
+        if target is None or not any((target.role, target.name, target.text, target.near_text, target.fallbacks)):
+            raise ValueError("Every lookup action requires a target")
         value = action_data.get("value")
-        if action_type == "type" and value and concrete_member_id is None:
-            concrete_member_id = str(value)
-        signature = (action_type, target.model_dump_json() if target else "")
-        if action_type == "extract" and signature in seen:
-            continue
-        seen.add(signature)
-        output_name = action_data.get("output_name")
-        if action_type == "extract" and output_name is None:
-            output_name = "savings_balance"
-        elif action_type == "extract":
-            # This capability has one declared output; normalize model prose to its contract name.
-            output_name = "savings_balance"
+        if action_type == "type":
+            if not isinstance(value, str) or not value.strip():
+                raise ValueError("Lookup trajectory requires a non-empty member ID")
+            if concrete_member_id is not None and value != concrete_member_id:
+                raise ValueError("Lookup trajectory has ambiguous member ID values")
+            concrete_member_id = value
+        if action_type == "extract" and parse_balance(result.get("value")) is None:
+            raise ValueError("Lookup trajectory requires a verified monetary extraction")
+        # The demo has one declared output; non-extract actions have no output.
+        output_name = "savings_balance" if action_type == "extract" else None
         checkpoint = None
         if action_type == "type" and target:
             checkpoint = Checkpoint(type="value_equals", target=target, value=value)
@@ -59,6 +64,8 @@ def _trajectory_steps(trajectory: list[dict]) -> tuple[list[CapabilityStep], str
             risk=action_risk(Action(action_type=action_type, target=target,
                 risk=action_data.get("risk", "read"), reason="compile executed action")),
         ))
+    if phase != 2 or concrete_member_id is None:
+        raise ValueError("Lookup trajectory requires successful type, click and extract actions")
     return steps, concrete_member_id
 
 
@@ -66,7 +73,8 @@ def compile_lookup_capability(entry_point: str, trajectory: list[dict]) -> Capab
     """Compile the successful executed trajectory, with only small demo normalization."""
     steps, concrete_member_id = _trajectory_steps(trajectory)
     for step in steps:
-        step.value = _parameterize(step.value, concrete_member_id)
+        if step.action == "type":
+            step.value = _parameterize(step.value, concrete_member_id)
         if step.checkpoint and step.checkpoint.type == "value_equals":
             step.checkpoint.value = _parameterize(step.checkpoint.value, concrete_member_id)
     return Capability(

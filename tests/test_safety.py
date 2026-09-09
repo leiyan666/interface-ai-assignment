@@ -37,8 +37,12 @@ def test_policy_can_mark_arbitrary_target_high_risk():
 def test_compiler_preserves_declared_risk():
     from computer_use.recorder import compile_lookup_capability
     action = Action(action_type="click", target=Target(name="Search"), risk=RiskLevel.IRREVERSIBLE, reason="test")
-    capability = compile_lookup_capability("http://127.0.0.1:8000/", [{"action": action.model_dump(), "result": {"ok": True}}])
-    assert capability.steps[0].risk == RiskLevel.IRREVERSIBLE
+    capability = compile_lookup_capability("http://127.0.0.1:8000/", [
+        {"action": {"action_type": "type", "target": {"name": "Member Number"}, "value": "10001"}, "result": {"ok": True}},
+        {"action": action.model_dump(), "result": {"ok": True}},
+        {"action": {"action_type": "extract", "target": {"near_text": "Savings Account"}}, "result": {"ok": True, "value": "$4250.32"}},
+    ])
+    assert capability.steps[1].risk == RiskLevel.IRREVERSIBLE
 
 
 def test_replay_enforces_artifact_risk_before_execution(monkeypatch, tmp_path):

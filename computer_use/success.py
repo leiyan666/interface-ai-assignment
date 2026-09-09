@@ -6,6 +6,21 @@ from decimal import Decimal
 from .schema import Action, ActionResult, Observation
 
 
+def parse_balance(value: object) -> Decimal | None:
+    """Parse a complete finite money/number value, preserving numeric zero."""
+    if isinstance(value, bool) or value is None:
+        return None
+    if isinstance(value, (int, float, Decimal)):
+        parsed = Decimal(str(value))
+        return parsed if parsed.is_finite() else None
+    if not isinstance(value, str):
+        return None
+    text = value.strip()
+    if not re.fullmatch(r"\$?-?(?:[0-9]+|[0-9]{1,3}(?:,[0-9]{3})+)(?:\.[0-9]+)?", text):
+        return None
+    return Decimal(text.removeprefix("$").replace(",", ""))
+
+
 def verified_savings_balance(
     action: Action, result: ActionResult, observation: Observation,
 ) -> Decimal | None:
@@ -22,10 +37,4 @@ def verified_savings_balance(
     if any(outcome in observation.visible_text.casefold() for outcome in
            ("no savings account", "member not found", "permission denied")):
         return None
-    if not isinstance(result.value, str):
-        return None
-    # Full match prevents accepting names, member numbers, or a whole table dump.
-    value = result.value.strip()
-    if not re.fullmatch(r"\$?(?:[0-9]+|[0-9]{1,3}(?:,[0-9]{3})+)\.[0-9]{2}", value):
-        return None
-    return Decimal(value.removeprefix("$").replace(",", ""))
+    return parse_balance(result.value)

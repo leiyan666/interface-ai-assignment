@@ -6,6 +6,7 @@ import json
 import time
 import uuid
 from pathlib import Path
+from decimal import Decimal
 
 from .handoff import handoff
 from .llm import LLMClient
@@ -22,6 +23,7 @@ def discover(goal: str, target: str, client: LLMClient, headless: bool = False, 
     logger = JsonlLogger("evidence/discovery_success.jsonl", run_id, "discovery")
     surface = PlaywrightSurface(target, headless=headless)
     trajectory: list[dict] = []
+    verified_outputs: dict[str, Decimal] = {}
     try:
         surface.start()
         for step_number in range(1, max_steps + 1):
@@ -46,7 +48,9 @@ def discover(goal: str, target: str, client: LLMClient, headless: bool = False, 
                         "message": "Savings checkpoint failed. Extract the Savings Account value "
                         "as money using output_name='savings_balance'.",
                     })
-            if action.action_type == "finish":
+                else:
+                    verified_outputs["savings_balance"] = balance
+            if action.action_type == "finish" and "savings_balance" not in verified_outputs:
                 result = result.model_copy(update={
                     "ok": False,
                     "message": "Finish rejected: first extract and verify savings_balance.",
@@ -57,14 +61,14 @@ def discover(goal: str, target: str, client: LLMClient, headless: bool = False, 
                 logger.event("success_checkpoint_rejected", step=step_number, message=result.message)
             # Verified extraction ends this single-output goal immediately; a bare
             # finish is never proof of success. Zero is a valid balance.
-            goal_complete = balance is not None
+            goal_complete = result.ok and "savings_balance" in verified_outputs and action.action_type in {"extract", "finish"}
             if goal_complete:
                 artifact = compile_lookup_capability(target, trajectory)
                 path = Path("artifacts/lookup_savings_balance.json")
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text(json.dumps(artifact.model_dump(mode="json"), indent=2) + "\n", encoding="utf-8")
                 Path("evidence/discovery_trajectory.json").write_text(json.dumps(trajectory, indent=2) + "\n", encoding="utf-8")
-                logger.event("discovery_completed", step=step_number, artifact=str(path), reason="savings checkpoint satisfied", outputs={"savings_balance": str(balance)})
+                logger.event("discovery_completed", step=step_number, artifact=str(path), reason="savings checkpoint satisfied", outputs={"savings_balance": str(verified_outputs["savings_balance"])})
                 return path
             time.sleep(0.1)
         raise RuntimeError("Discovery stopped after max_steps without a verified savings balance")
