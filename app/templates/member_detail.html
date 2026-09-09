@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Member Lookup</title></head>
+<body>
+  <table border="1" cellpadding="8" width="640">
+    <tr><td colspan="2"><strong>Member Lookup</strong></td></tr>
+    <tr>
+      <td><label for="member-number">Member Number:</label></td>
+      <td><form method="post" action="/lookup"><input id="member-number" name="member_number" autocomplete="off"><button type="submit">Search</button></form></td>
+    </tr>
+  </table>
+  {% if blocker %}<script>window.setTimeout(function () { alert('Legacy system requires an operator to confirm this request.'); }, 100);</script><p>Operator confirmation required.</p>{% endif %}
+  {% if transient %}<p role="status">The legacy system is temporarily busy. Please retry.</p>{% endif %}
+  {% if outcome == "MEMBER_NOT_FOUND" %}<p role="alert">Member not found</p>{% endif %}
+  {% if outcome == "PERMISSION_DENIED" %}<p role="alert">Permission denied</p>{% endif %}
+  {% if outcome == "NO_SAVINGS_ACCOUNT" %}<p role="alert">No savings account</p>{% endif %}
+  {% if member %}
+  <h3>Member Details</h3>
+  <table border="1" cellpadding="6">
+    <tr><th>Member Name</th><td>{{ member.name }}</td></tr>
+    <tr><th>Member Number</th><td>{{ member.number }}</td></tr>
+    <tr><th>Checking Account</th><td>${{"%.2f"|format(member.checking)}}</td></tr>
+    {% if member.savings is not none %}<tr><th>Savings Account</th><td>${{"%.2f"|format(member.savings)}}</td></tr>{% endif %}
+  </table>
+  {% endif %}
+</body>
+</html>

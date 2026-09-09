@@ -1,0 +1,207 @@
+{
+  "schema_version": "1.0",
+  "capability_id": "lookup_savings_balance",
+  "name": "Lookup Savings Balance",
+  "description": "Look up a member and return their savings balance.",
+  "target_app": {
+    "app_id": "mock_credit_union",
+    "entry_point": "http://127.0.0.1:8000/",
+    "version": "mock-1"
+  },
+  "inputs": [
+    {
+      "name": "member_id",
+      "type": "string",
+      "required": true,
+      "description": "Synthetic member number"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "savings_balance",
+      "type": "number",
+      "required": false,
+      "description": ""
+    }
+  ],
+  "steps": [
+    {
+      "id": "step_1",
+      "action": "type",
+      "target": {
+        "role": "textbox",
+        "name": "Member Number",
+        "text": null,
+        "near_text": null,
+        "frame_hint": "Member Lookup",
+        "fallbacks": []
+      },
+      "value": "{{member_id}}",
+      "output_name": null,
+      "checkpoint": {
+        "type": "value_equals",
+        "value": "{{member_id}}",
+        "target": {
+          "role": "textbox",
+          "name": "Member Number",
+          "text": null,
+          "near_text": null,
+          "frame_hint": "Member Lookup",
+          "fallbacks": []
+        },
+        "output_name": null,
+        "conditions": []
+      },
+      "timeout_ms": 5000,
+      "retries": 0,
+      "risk": "safe_write"
+    },
+    {
+      "id": "step_2",
+      "action": "click",
+      "target": {
+        "role": "button",
+        "name": "Search",
+        "text": null,
+        "near_text": null,
+        "frame_hint": "Member Lookup",
+        "fallbacks": []
+      },
+      "value": null,
+      "output_name": null,
+      "checkpoint": {
+        "type": "any_of",
+        "value": null,
+        "target": null,
+        "output_name": null,
+        "conditions": [
+          {
+            "type": "text_visible",
+            "value": "Savings Account",
+            "target": null,
+            "output_name": null,
+            "conditions": []
+          },
+          {
+            "type": "text_visible",
+            "value": "Member not found",
+            "target": null,
+            "output_name": null,
+            "conditions": []
+          },
+          {
+            "type": "text_visible",
+            "value": "No savings account",
+            "target": null,
+            "output_name": null,
+            "conditions": []
+          },
+          {
+            "type": "text_visible",
+            "value": "Permission denied",
+            "target": null,
+            "output_name": null,
+            "conditions": []
+          }
+        ]
+      },
+      "timeout_ms": 5000,
+      "retries": 0,
+      "risk": "read"
+    },
+    {
+      "id": "step_3",
+      "action": "extract",
+      "target": {
+        "role": null,
+        "name": null,
+        "text": null,
+        "near_text": "Savings Account",
+        "frame_hint": "Member Lookup",
+        "fallbacks": []
+      },
+      "value": null,
+      "output_name": "savings_balance",
+      "checkpoint": {
+        "type": "output_extracted",
+        "value": null,
+        "target": null,
+        "output_name": "savings_balance",
+        "conditions": []
+      },
+      "timeout_ms": 5000,
+      "retries": 0,
+      "risk": "read"
+    }
+  ],
+  "success_condition": {
+    "type": "output_extracted",
+    "value": null,
+    "target": null,
+    "output_name": "savings_balance",
+    "conditions": []
+  },
+  "business_outcomes": [
+    {
+      "code": "MEMBER_NOT_FOUND",
+      "description": "The member number is not in the console.",
+      "checkpoint": {
+        "type": "text_visible",
+        "value": "Member not found",
+        "target": null,
+        "output_name": null,
+        "conditions": []
+      }
+    },
+    {
+      "code": "NO_SAVINGS_ACCOUNT",
+      "description": "The member has no savings account.",
+      "checkpoint": {
+        "type": "text_visible",
+        "value": "No savings account",
+        "target": null,
+        "output_name": null,
+        "conditions": []
+      }
+    },
+    {
+      "code": "PERMISSION_DENIED",
+      "description": "The employee lacks access to this member.",
+      "checkpoint": {
+        "type": "text_visible",
+        "value": "Permission denied",
+        "target": null,
+        "output_name": null,
+        "conditions": []
+      }
+    }
+  ],
+  "safety_policy": {
+    "allowed_hosts": [
+      "localhost",
+      "127.0.0.1"
+    ],
+    "allowed_actions": [
+      "click",
+      "type",
+      "extract",
+      "navigate",
+      "wait",
+      "finish",
+      "escalate"
+    ],
+    "blocked_routes": [],
+    "require_human_for_risk": [
+      "irreversible"
+    ]
+  },
+  "metadata": {
+    "author": "interface.ai take-home",
+    "created_at": "2026-09-08T23:30:59.887669+00:00",
+    "source": "discovery",
+    "tags": [
+      "browser",
+      "read-only"
+    ]
+  }
+}

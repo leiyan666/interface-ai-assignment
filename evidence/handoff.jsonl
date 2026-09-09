@@ -1,0 +1,18 @@
+{"timestamp": "2026-09-08T23:17:10.938126+00:00", "run_id": "handoff-demo", "phase": "handoff", "event": "handoff_requested", "control_owner": "automation", "evidence": "evidence/failure_or_handoff.png"}
+{"timestamp": "2026-09-08T23:17:10.938292+00:00", "run_id": "handoff-demo", "phase": "handoff", "event": "control_transferred_to_human", "control_owner": "human"}
+{"timestamp": "2026-09-08T23:17:10.938356+00:00", "run_id": "handoff-demo", "phase": "handoff", "event": "human_intervention_completed", "control_owner": "human"}
+{"timestamp": "2026-09-08T23:17:10.938402+00:00", "run_id": "handoff-demo", "phase": "handoff", "event": "control_returned_to_automation", "control_owner": "automation"}
+{"timestamp": "2026-09-08T23:34:23.849614+00:00", "run_id": "fcbccdae94", "phase": "replay", "event": "action_executed", "step": "step_1", "action": "type", "status": "ok"}
+{"timestamp": "2026-09-08T23:34:25.437618+00:00", "run_id": "fcbccdae94", "phase": "replay", "event": "step_failed", "step": "step_2", "action": "click", "status": "error", "message": "Checkpoint failed for step_2"}
+{"timestamp": "2026-09-08T23:35:29.265757+00:00", "run_id": "f802e1b9df", "phase": "replay", "event": "action_executed", "step": "step_1", "action": "type", "status": "ok"}
+{"timestamp": "2026-09-08T23:35:30.520153+00:00", "run_id": "f802e1b9df", "phase": "replay", "event": "handoff_requested", "control_owner": "automation", "evidence": "evidence/replay_handoff_f802e1b9df.png"}
+{"timestamp": "2026-09-08T23:35:30.520299+00:00", "run_id": "f802e1b9df", "phase": "replay", "event": "control_transferred_to_human", "control_owner": "human"}
+{"timestamp": "2026-09-08T23:35:53.119005+00:00", "run_id": "f802e1b9df", "phase": "replay", "event": "human_intervention_completed", "control_owner": "human"}
+{"timestamp": "2026-09-08T23:35:53.119566+00:00", "run_id": "f802e1b9df", "phase": "replay", "event": "control_returned_to_automation", "control_owner": "automation"}
+{"timestamp": "2026-09-08T23:35:53.124162+00:00", "run_id": "f802e1b9df", "phase": "replay", "event": "step_failed", "step": "step_2", "action": "click", "status": "error", "message": "Locator.count: Target page, context or browser has been closed"}
+{"timestamp": "2026-09-08T23:36:35.946410+00:00", "run_id": "aab76052a5", "phase": "replay", "event": "action_executed", "step": "step_1", "action": "type", "status": "ok"}
+{"timestamp": "2026-09-08T23:36:37.101813+00:00", "run_id": "aab76052a5", "phase": "replay", "event": "handoff_requested", "control_owner": "automation", "evidence": "evidence/replay_handoff_aab76052a5.png"}
+{"timestamp": "2026-09-08T23:36:37.101981+00:00", "run_id": "aab76052a5", "phase": "replay", "event": "control_transferred_to_human", "control_owner": "human"}
+{"timestamp": "2026-09-08T23:37:02.820186+00:00", "run_id": "aab76052a5", "phase": "replay", "event": "human_intervention_completed", "control_owner": "human"}
+{"timestamp": "2026-09-08T23:37:02.820787+00:00", "run_id": "aab76052a5", "phase": "replay", "event": "control_returned_to_automation", "control_owner": "automation"}
+{"timestamp": "2026-09-08T23:37:02.826461+00:00", "run_id": "aab76052a5", "phase": "replay", "event": "step_failed", "step": "step_2", "action": "click", "status": "error", "message": "Locator.count: Target page, context or browser has been closed"}

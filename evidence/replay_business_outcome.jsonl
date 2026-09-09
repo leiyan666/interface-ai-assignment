@@ -1,0 +1,18 @@
+{"timestamp": "2026-09-08T23:14:42.815104+00:00", "run_id": "f77654535e", "phase": "replay", "event": "step_failed", "step": "step_1", "action": "type", "status": "error", "message": "Could not resolve semantic target: {\"role\":\"textbox\",\"name\":\"Member Number\",\"text\":null,\"near_text\":null,\"frame_hint\":\"Member Lookup\",\"fallbacks\":[]}"}
+{"timestamp": "2026-09-08T23:14:43.300260+00:00", "run_id": "083c607d91", "phase": "replay", "event": "step_failed", "step": "step_1", "action": "type", "status": "error", "message": "Could not resolve semantic target: {\"role\":\"textbox\",\"name\":\"Member Number\",\"text\":null,\"near_text\":null,\"frame_hint\":\"Member Lookup\",\"fallbacks\":[]}"}
+{"timestamp": "2026-09-08T23:14:43.792539+00:00", "run_id": "2301c02a9a", "phase": "replay", "event": "step_failed", "step": "step_1", "action": "type", "status": "error", "message": "Could not resolve semantic target: {\"role\":\"textbox\",\"name\":\"Member Number\",\"text\":null,\"near_text\":null,\"frame_hint\":\"Member Lookup\",\"fallbacks\":[]}"}
+{"timestamp": "2026-09-08T23:15:10.807276+00:00", "run_id": "75f2171d51", "phase": "replay", "event": "action_executed", "step": "step_1", "action": "type", "status": "ok"}
+{"timestamp": "2026-09-08T23:15:11.319276+00:00", "run_id": "75f2171d51", "phase": "replay", "event": "action_executed", "step": "step_2", "action": "click", "status": "ok"}
+{"timestamp": "2026-09-08T23:15:11.397645+00:00", "run_id": "75f2171d51", "phase": "replay", "event": "replay_completed", "status": "business_outcome", "business_outcome": "MEMBER_NOT_FOUND"}
+{"timestamp": "2026-09-08T23:15:11.952962+00:00", "run_id": "88c5fd7775", "phase": "replay", "event": "action_executed", "step": "step_1", "action": "type", "status": "ok"}
+{"timestamp": "2026-09-08T23:15:12.372318+00:00", "run_id": "88c5fd7775", "phase": "replay", "event": "action_executed", "step": "step_2", "action": "click", "status": "ok"}
+{"timestamp": "2026-09-08T23:15:12.528547+00:00", "run_id": "88c5fd7775", "phase": "replay", "event": "replay_completed", "status": "business_outcome", "business_outcome": "NO_SAVINGS_ACCOUNT"}
+{"timestamp": "2026-09-08T23:15:13.085937+00:00", "run_id": "2b4c011eca", "phase": "replay", "event": "action_executed", "step": "step_1", "action": "type", "status": "ok"}
+{"timestamp": "2026-09-08T23:15:13.793028+00:00", "run_id": "2b4c011eca", "phase": "replay", "event": "action_executed", "step": "step_2", "action": "click", "status": "ok"}
+{"timestamp": "2026-09-08T23:15:14.026439+00:00", "run_id": "2b4c011eca", "phase": "replay", "event": "replay_completed", "status": "business_outcome", "business_outcome": "PERMISSION_DENIED"}
+{"timestamp": "2026-09-08T23:16:07.758684+00:00", "run_id": "b09ea8a82a", "phase": "replay", "event": "action_executed", "step": "step_1", "action": "type", "status": "ok"}
+{"timestamp": "2026-09-08T23:16:08.276223+00:00", "run_id": "b09ea8a82a", "phase": "replay", "event": "action_executed", "step": "step_2", "action": "click", "status": "ok"}
+{"timestamp": "2026-09-08T23:16:08.354703+00:00", "run_id": "b09ea8a82a", "phase": "replay", "event": "replay_completed", "status": "business_outcome", "business_outcome": "MEMBER_NOT_FOUND"}
+{"timestamp": "2026-09-08T23:32:47.345110+00:00", "run_id": "459897ade2", "phase": "replay", "event": "action_executed", "step": "step_1", "action": "type", "status": "ok"}
+{"timestamp": "2026-09-08T23:32:48.359955+00:00", "run_id": "459897ade2", "phase": "replay", "event": "action_executed", "step": "step_2", "action": "click", "status": "ok"}
+{"timestamp": "2026-09-08T23:32:48.439594+00:00", "run_id": "459897ade2", "phase": "replay", "event": "replay_completed", "status": "business_outcome", "business_outcome": "MEMBER_NOT_FOUND"}
